@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আমার পোর্টফোলিও</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #0f0f0f; color: #fff; }
+
+    /* ন্যাভবার */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+      padding: 15px 30px; display: flex;
+      justify-content: space-between; align-items: center; z-index: 100;
+    }
+    nav .logo { font-size: 1.4rem; font-weight: bold; color: #e0b04b; }
+    nav ul { list-style: none; display: flex; gap: 25px; }
+    nav ul li a {
+      color: #ccc; text-decoration: none; font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover { color: #e0b04b; }
+
+    /* হিরো সেকশন */
+    .hero {
+      height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      padding: 20px;
+    }
+    .hero h1 { font-size: 3rem; color: #e0b04b; margin-bottom: 15px; }
+    .hero p { font-size: 1.2rem; color: #aaa; max-width: 600px; }
+
+    /* সেকশন */
+    section { padding: 80px 30px; max-width: 1200px; margin: 0 auto; }
+    section h2 {
+      font-size: 2rem; color: #e0b04b;
+      margin-bottom: 40px; text-align: center;
+      border-bottom: 2px solid #e0b04b; padding-bottom: 10px;
+    }
+
+    /* গ্যালারি গ্রিড */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #1e1e1e; border-radius: 10px;
+      overflow: hidden; transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .card:hover { transform: scale(1.03); }
+    .card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .card video { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .card-title {
+      padding: 10px; font-size: 0.85rem;
+      color: #aaa; text-align: center;
+    }
+
+    /* লোডিং */
+    .loading { text-align: center; color: #777; padding: 40px; font-size: 1rem; }
+
+    /* লাইটবক্স */
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92); z-index: 999;
+      justify-content: center; align-items: center;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img, #lightbox video {
+      max-width: 90vw; max-height: 90vh;
+      border-radius: 8px;
+    }
+    #lightbox-close {
+      position: absolute; top: 20px; right: 30px;
+      font-size: 2.5rem; cursor: pointer; color: #fff;
+    }
+
+    /* About */
+    .about-box {
+      background: #1e1e1e; border-radius: 12px;
+      padding: 40px; max-width: 700px; margin: 0 auto;
+      line-height: 1.8; color: #ccc; font-size: 1.05rem;
+    }
+
+    /* ফুটার */
+    footer {
+      text-align: center; padding: 30px;
+      color: #555; font-size: 0.85rem;
+      border-top: 1px solid #222;
+    }
+
+    /* রেসপন্সিভ */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      nav ul { gap: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ন্যাভবার -->
+<nav>
+  <div class="logo">My Portfolio</div>
+  <ul>
+    <li><a href="#photos">Photos</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#designs">Designs</a></li>
+    <li><a href="#other">Other Work</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- হিরো -->
+<div class="hero">
+  <h1>আপনার নাম লিখুন</h1>
+  <p>Photographer · Designer · Creator</p>
+</div>
+
+<!-- Photos সেকশন -->
+<section id="photos">
+  <h2>📷 Photos</h2>
+  <div class="grid" id="photos-container">
+    <div class="loading">লোড হচ্ছে...</div>
+  </div>
+</section>
+
+<!-- Videos সেকশন -->
+<section id="videos">
+  <h2>🎬 Videos</h2>
+  <div class="grid" id="videos-container">
+    <div class="loading">লোড হচ্ছে...</div>
+  </div>
+</section>
+
+<!-- Designs সেকশন -->
+<section id="designs">
+  <h2>🎨 Designs</h2>
+  <div class="grid" id="designs-container">
+    <div class="loading">লোড হচ্ছে...</div>
+  </div>
+</section>
+
+<!-- Other Work সেকশন -->
+<section id="other">
+  <h2>💼 Other Work</h2>
+  <div class="grid" id="other-container">
+    <div class="loading">লোড হচ্ছে...</div>
+  </div>
+</section>
+
+<!-- About সেকশন -->
+<section id="about">
+  <h2>👤 About Me</h2>
+  <div class="about-box">
+    <p>এখানে আপনার পরিচিতি লিখুন। আপনি কী করেন, কোথায় থাকেন, কীভাবে যোগাযোগ করা যাবে ইত্যাদি।</p>
+    <br>
+    <p>📧 Email: আপনার ইমেইল</p>
+    <p>📍 Location: Bangladesh</p>
+  </div>
+</section>
+
+<footer>© 2026 আপনার নাম | Hosted on Netlify</footer>
+
+<!-- লাইটবক্স -->
+<div id="lightbox">
+  <span id="lightbox-close" onclick="closeLb()">✕</span>
+  <div id="lightbox-content"></div>
+</div>
+
+<script>
+  // ⚠️ এখানে আপনার GitHub Username ও Repo Name বসান
+  const GITHUB_USER = "আপনার_USERNAME";
+  const REPO_NAME = "my-portfolio";
+
+  const SECTIONS = {
+    photos:  { folder: "assets/photos",  types: /\.(jpg|jpeg|png|webp|gif)$/i },
+    videos:  { folder: "assets/videos",  types: /\.(mp4|webm)$/i },
+    designs: { folder: "assets/designs", types: /\.(jpg|jpeg|png|webp|pdf)$/i },
+    other:   { folder: "assets/other",   types: /\.(jpg|jpeg|png|webp|mp4)$/i }
+  };
+
+  async function loadSection(name) {
+    const { folder, types } = SECTIONS[name];
+    const container = document.getElementById(name + "-container");
+    const API = `https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/contents/${folder}`;
+
+    try {
+      const res = await fetch(API);
+      const files = await res.json();
+      if (!Array.isArray(files) || files.length === 0) {
+        container.innerHTML = `<div class="loading">এখানে এখনো কিছু যোগ করা হয়নি।</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      files.forEach(file => {
+        if (!types.test(file.name)) return;
+        const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/${file.path}`;
+        const isVideo = /\.(mp4|webm)$/i.test(file.name);
+        const card = document.createElement("div");
+        card.className = "card";
+        card.onclick = () => openLb(isVideo ? "video" : "img", url);
+        card.innerHTML = isVideo
+          ? `<video src="${url}" muted></video><div class="card-title">${file.name}</div>`
+          : `<img src="${url}" alt="${file.name}" loading="lazy"><div class="card-title">${file.name}</div>`;
+        container.appendChild(card);
+      });
+    } catch (e) {
+      container.innerHTML = `<div class="loading">লোড হতে সমস্যা হয়েছে।</div>`;
+    }
+  }
+
+  function openLb(type, url) {
+    const lb = document.getElementById("lightbox");
+    const content = document.getElementById("lightbox-content");
+    content.innerHTML = type === "video"
+      ? `<video src="${url}" controls autoplay style="max-width:90vw;max-height:90vh"></video>`
+      : `<img src="${url}">`;
+    lb.classList.add("active");
+  }
+
+  function closeLb() {
+    document.getElementById("lightbox").classList.remove("active");
+    document.getElementById("lightbox-content").innerHTML = "";
+  }
+
+  // সব সেকশন লোড করুন
+  Object.keys(SECTIONS).forEach(loadSection);
+</script>
+</body>
+</html>
