@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junaid Khan — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#070709;
+  --dark:#0d0d12;
+  --card:#13131a;
+  --card2:#18181f;
+  --white:#f0ecff;
+  --cream:#ccc8e0;
+  --accent:#a78bfa;
+  --accent2:#7c3aed;
+  --gold:#e8c97a;
+  --muted:#4a4a6a;
+  --border:rgba(167,139,250,0.12);
+  --glow:rgba(167,139,250,0.18);
+  --fb:#1877f2;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden;min-height:100vh}
+
+body::before{content:'';position:fixed;width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,237,0.07) 0%,transparent 70%);top:-100px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:0}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:14px 20px;display:flex;align-items:center;gap:12px;background:rgba(7,7,9,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:3px;color:var(--white);flex-shrink:0}
+
+.search-wrap{flex:1;position:relative}
+.search-input{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:100px;padding:8px 16px 8px 36px;font-size:0.78rem;color:var(--white);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.3s,box-shadow 0.3s}
+.search-input::placeholder{color:var(--muted)}
+.search-input:focus{border-color:rgba(167,139,250,0.4);box-shadow:0 0 16px rgba(167,139,250,0.1)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--muted)}
+.search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted);cursor:pointer;display:none;background:none;border:none}
+.search-clear.visible{display:block}
+
+.hamburger{width:36px;height:36px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;background:var(--card2);border:1px solid var(--border);border-radius:8px;flex-shrink:0;transition:border-color 0.3s}
+.hamburger:hover{border-color:rgba(167,139,250,0.3)}
+.hamburger span{display:block;width:16px;height:1.5px;background:var(--cream);border-radius:2px;transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+
+.drawer{position:fixed;top:0;right:-280px;width:260px;height:100vh;background:var(--dark);border-left:1px solid var(--border);z-index:400;transition:right 0.35s cubic-bezier(0.16,1,0.3,1);padding:80px 28px 40px;display:flex;flex-direction:column;gap:8px}
+.drawer.open{right:0;box-shadow:-20px 0 60px rgba(0,0,0,0.5)}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:390;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.drawer-overlay.open{opacity:1;pointer-events:all}
+.drawer-link{display:flex;align-items:center;gap:12px;padding:14px 16px;color:var(--cream);text-decoration:none;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;border-radius:8px;transition:all 0.3s;border:1px solid transparent}
+.drawer-link:hover{background:rgba(167,139,250,0.06);border-color:var(--border);color:var(--accent)}
+.drawer-link svg{width:16px;height:16px;color:var(--accent)}
+.drawer-divider{height:1px;background:var(--border);margin:8px 0}
+
+.hero{padding:90px 20px 32px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
+
+.profile-wrap{position:relative;margin-bottom:0;display:inline-block}
+.profile-ring-outer{width:140px;height:140px;border-radius:50%;background:conic-gradient(var(--accent),var(--accent2),var(--accent));padding:2px;position:relative}
+.profile-ring-outer::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(var(--accent),var(--accent2),var(--accent));opacity:0.3;filter:blur(8px);z-index:-1;animation:glowPulse 3s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{opacity:0.2}50%{opacity:0.5}}
+.profile-inner{width:100%;height:100%;border-radius:50%;background:var(--card);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.profile-inner img{width:100%;height:100%;object-fit:cover}
+.profile-inner svg{width:44px;height:44px;color:var(--muted)}
+
+.learner-badge{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid rgba(167,139,250,0.25);padding:5px 14px;border-radius:100px;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-top:10px;box-shadow:0 0 12px rgba(167,139,250,0.12)}
+.learner-badge::before{content:'';width:5px;height:5px;background:#34d399;border-radius:50%;animation:blink 2s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero-name{margin:18px 0 4px}
+.hero-name-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--gold);letter-spacing:3px;display:block;margin-bottom:2px}
+.hero-name-main{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,12vw,5rem);letter-spacing:3px;color:var(--white);display:block;text-shadow:0 0 40px rgba(167,139,250,0.2)}
+.hero-role{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+.contact-icons{display:flex;gap:12px;justify-content:center;margin:20px 0 0;flex-wrap:wrap}
+.cicon{width:52px;height:52px;border-radius:14px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all 0.3s;position:relative;overflow:hidden}
+.cicon::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(167,139,250,0.15),transparent);opacity:0;transition:opacity 0.3s}
+.cicon:hover::before{opacity:1}
+.cicon:hover{border-color:rgba(167,139,250,0.4);box-shadow:0 0 20px rgba(167,139,250,0.15);transform:translateY(-2px)}
+.cicon svg{width:20px;height:20px;color:var(--accent);position:relative;z-index:1}
+.cicon.fb-icon:hover{border-color:rgba(24,119,242,0.4);box-shadow:0 0 20px rgba(24,119,242,0.15)}
+.cicon.fb-icon svg{color:var(--fb)}
+
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:24px 20px 0}
+
+.gallery-section{padding:20px 16px 40px;position:relative;z-index:1}
+
+.search-label{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:none;padding:0 4px}
+.search-label.visible{display:block}
+
+.tabs{display:flex;gap:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{flex:1;padding:9px 12px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;border-radius:7px;transition:all 0.3s;white-space:nowrap;min-width:0}
+.tab-btn.active{background:var(--card2);color:var(--white);box-shadow:0 0 16px rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.2)}
+.tab-btn:hover:not(.active){color:var(--cream)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+.gallery-grid{columns:2;gap:8px;column-gap:8px}
+.gallery-card{break-inside:avoid;margin-bottom:8px;position:relative;overflow:hidden;cursor:pointer;background:var(--card);border-radius:10px;border:1px solid var(--border);transition:all 0.3s}
+.gallery-card:hover{border-color:rgba(167,139,250,0.3);box-shadow:0 0 24px rgba(167,139,250,0.1)}
+.gallery-card img,.gallery-card video{width:100%;display:block;border-radius:9px;transition:transform 0.5s}
+.gallery-card:hover img,.gallery-card:hover video{transform:scale(1.04)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,9,0.85),transparent 60%);opacity:0;transition:opacity 0.3s;padding:12px;display:flex;flex-direction:column;justify-content:flex-end;border-radius:9px}
+.gallery-card:hover .gallery-overlay{opacity:1}
+.gallery-name{font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--cream)}
+
+/* ══ WEB PROJECT CARD ══ */
+.web-card{break-inside:avoid;margin-bottom:8px;position:relative;overflow:hidden;background:var(--card);border-radius:10px;border:1px solid var(--border);transition:all 0.3s;text-decoration:none;display:block}
+.web-card:hover{border-color:rgba(167,139,250,0.4);box-shadow:0 0 28px rgba(167,139,250,0.15);transform:translateY(-2px)}
+.web-card img{width:100%;display:block;border-radius:9px 9px 0 0;transition:transform 0.5s;aspect-ratio:16/9;object-fit:cover}
+.web-card:hover img{transform:scale(1.04)}
+.web-card-info{padding:10px 12px 12px}
+.web-card-name{font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--white);margin-bottom:4px}
+.web-card-desc{font-size:0.65rem;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.web-card-link{display:inline-flex;align-items:center;gap:5px;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border:1px solid rgba(167,139,250,0.25);padding:4px 10px;border-radius:100px;transition:all 0.3s}
+.web-card:hover .web-card-link{background:rgba(167,139,250,0.1);border-color:var(--accent)}
+.web-card-link svg{width:10px;height:10px}
+/* No thumbnail fallback */
+.web-card-thumb-fallback{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--card2),var(--dark));display:flex;align-items:center;justify-content:center;border-radius:9px 9px 0 0}
+.web-card-thumb-fallback svg{width:32px;height:32px;color:var(--muted);opacity:0.4}
+
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;grid-column:1/-1;column-span:all}
+.empty-state svg{width:40px;height:40px;color:var(--muted);margin:0 auto 12px;display:block;opacity:0.4}
+
+.no-results{display:none;text-align:center;padding:48px 20px;color:var(--muted)}
+.no-results.visible{display:block}
+.no-results-icon{font-size:2.5rem;margin-bottom:10px}
+.no-results p{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase}
+.no-results span{color:var(--accent)}
+
+footer{padding:36px 20px 32px;border-top:1px solid var(--border);position:relative;z-index:1;overflow:hidden}
+footer::before{content:'JK';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:200px;color:rgba(167,139,250,0.025);right:-10px;bottom:-20px;pointer-events:none;user-select:none;line-height:1}
+.footer-name{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:4px;display:block;color:var(--white);margin-bottom:4px;text-shadow:0 0 30px rgba(167,139,250,0.2)}
+.footer-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:300px}
+.footer-info{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.finfo-item{display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--cream);text-decoration:none;transition:color 0.3s}
+.finfo-item:hover{color:var(--accent)}
+.finfo-item svg{width:14px;height:14px;color:var(--accent);flex-shrink:0}
+.footer-bottom{display:flex;flex-direction:column;gap:4px;padding-top:20px;border-top:1px solid var(--border)}
+.footer-copy,.footer-role{font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+#lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+#lb.open{display:flex}
+#lb-close{color:var(--muted);cursor:pointer;background:rgba(255,255,255,0.05);border:1px solid var(--border);font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;font-family:'DM Sans',sans-serif;padding:8px 20px;border-radius:100px;transition:all 0.3s}
+#lb-close:hover{color:var(--white);border-color:var(--accent)}
+
+@media(min-width:600px){
+  .gallery-grid{columns:3}
+  .contact-icons{gap:16px}
+  .cicon{width:58px;height:58px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">JK.</div>
+  <div class="search-wrap">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search photos, videos..." autocomplete="off">
+    <button class="search-clear" id="searchClear">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <a href="#hero" class="drawer-link" onclick="closeDrawer()">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+    Home
+  </a>
+  <a href="#gallery-section" class="drawer-link" onclick="closeDrawer()">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+    My Work
+  </a>
+  <div class="drawer-divider"></div>
+  <a href="tel:01743558176" class="drawer-link">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z"/></svg>
+    +880 1743-558176
+  </a>
+  <a href="mailto:mdjunaidkhan097@gmail.com" class="drawer-link">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+    Email Me
+  </a>
+  <a href="https://www.facebook.com/Junaid.Khan.097" target="_blank" class="drawer-link">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="color:#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    Facebook
+  </a>
+</div>
+
+<section class="hero" id="hero">
+  <div class="profile-wrap">
+    <div class="profile-ring-outer">
+      <div class="profile-inner" id="profile-img-container">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="learner-badge">Learner</div>
+  <div class="hero-name">
+    <span class="hero-name-sub">মোঃযুনাইদ খান</span>
+  </div>
+  <div class="hero-role">Photographer · Designer · Creative</div>
+  <div class="contact-icons">
+    <a href="tel:01743558176" class="cicon" title="Call">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z"/></svg>
+    </a>
+    <a href="mailto:mdjunaidkhan097@gmail.com" class="cicon" title="Email">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+    </a>
+    <a href="https://www.facebook.com/Junaid.Khan.097" target="_blank" class="cicon fb-icon" title="Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="https://maps.google.com/?q=Bangladesh" target="_blank" class="cicon" title="Location">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="gallery-section" id="gallery-section">
+  <div class="search-label" id="searchLabel"></div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('photos',this)">Photos</button>
+    <button class="tab-btn" onclick="switchTab('videos',this)">Videos</button>
+    <button class="tab-btn" onclick="switchTab('designs',this)">Web</button>
+    <button class="tab-btn" onclick="switchTab('other',this)">Other</button>
+  </div>
+
+  <div id="search-results" style="display:none">
+    <div class="gallery-grid" id="search-grid"></div>
+    <div class="no-results" id="noResults">
+      <div class="no-results-icon">🔍</div>
+      <p>No results for "<span id="noResultsQuery"></span>"</p>
+    </div>
+  </div>
+
+  <div id="tab-photos" class="tab-panel active"><div class="gallery-grid" id="photos-container"><div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>Loading...</div></div></div>
+  <div id="tab-videos" class="tab-panel"><div class="gallery-grid" id="videos-container"><div class="empty-state">Loading...</div></div></div>
+  <div id="tab-designs" class="tab-panel"><div class="gallery-grid" id="designs-container"><div class="empty-state">Loading...</div></div></div>
+  <div id="tab-other" class="tab-panel"><div class="gallery-grid" id="other-container"><div class="empty-state">Loading...</div></div></div>
+</div>
+
+<footer id="footer">
+  <span class="footer-name">Junaid Khan</span>
+  <p class="footer-tagline">"I capture the story of life through the camera lens — turning every moment into art."</p>
+  <div class="footer-info">
+    <a href="tel:01743558176" class="finfo-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z"/></svg>
+      +880 1743-558176
+    </a>
+    <a href="mailto:mdjunaidkhan097@gmail.com" class="finfo-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+      mdjunaidkhan097@gmail.com
+    </a>
+    <a href="https://www.facebook.com/Junaid.Khan.097" target="_blank" class="finfo-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1877f2" width="14" height="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      facebook.com/Junaid.Khan.097
+    </a>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Md. Junaid Khan · All rights reserved</div>
+    <div class="footer-role">Photographer · Designer · Creative</div>
+  </div>
+</footer>
+
+<div id="lb">
+  <div id="lb-content"></div>
+  <button id="lb-close" onclick="closeLb()">✕ Close</button>
+</div>
+
+<script>
+// ══ CONFIG ══
+const GITHUB_USER = "khan-097";
+const REPO_NAME   = "my-portfolio";
+const RAW         = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main`;
+const API         = `https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/contents`;
+
+const SECTIONS = {
+  photos:  { folder:"assets/photos",   types:/\.(jpg|jpeg|png|webp|gif)$/i },
+  videos:  { folder:"assets/videos",   types:/\.(mp4|webm)$/i },
+  designs: { folder:"assets/designs",  types:null }, // handled by JSON
+  other:   { folder:"assets/other",    types:/\.(jpg|jpeg|png|webp|mp4)$/i }
+};
+
+const allFiles = [];
+const loaded   = {};
+
+// ══ HAMBURGER ══
+const hamburger      = document.getElementById('hamburger');
+const drawer         = document.getElementById('drawer');
+const drawerOverlay  = document.getElementById('drawerOverlay');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  drawer.classList.toggle('open');
+  drawerOverlay.classList.toggle('open');
+});
+function closeDrawer() {
+  hamburger.classList.remove('open');
+  drawer.classList.remove('open');
+  drawerOverlay.classList.remove('open');
+}
+
+// ══ PROFILE ══
+async function loadProfileImage() {
+  for (const ext of ['jpg','jpeg','png','webp']) {
+    const url = `${RAW}/assets/profile.${ext}`;
+    try {
+      const r = await fetch(url, { method:'HEAD' });
+      if (r.ok) {
+        document.getElementById('profile-img-container').innerHTML =
+          `<img src="${url}" alt="Junaid Khan">`;
+        return;
+      }
+    } catch(e) {}
+  }
+}
+
+// ══ NORMAL GALLERY CARD (photos/videos/other) ══
+function makeCard(file, catName) {
+  const url      = `${RAW}/${file.path}`;
+  const isVideo  = /\.(mp4|webm)$/i.test(file.name);
+  const niceName = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+  const card     = document.createElement('div');
+  card.className        = 'gallery-card';
+  card.dataset.name     = niceName.toLowerCase();
+  card.dataset.cat      = catName;
+  card.onclick          = () => openLb(isVideo ? 'video' : 'img', url);
+  card.innerHTML = isVideo
+    ? `<video src="${url}" muted loading="lazy" style="width:100%;border-radius:9px"></video>
+       <div class="gallery-overlay"><span class="gallery-name">${niceName}</span></div>`
+    : `<img src="${url}" alt="${niceName}" loading="lazy">
+       <div class="gallery-overlay"><span class="gallery-name">${niceName}</span></div>`;
+  return card;
+}
+
+// ══ WEB PROJECT CARD (from projects.json) ══
+function makeWebCard(project) {
+  const card = document.createElement('a');
+  card.className  = 'web-card';
+  card.href       = project.url || '#';
+  card.target     = '_blank';
+  card.rel        = 'noopener noreferrer';
+  card.dataset.name = (project.name || '').toLowerCase();
+  card.dataset.cat  = 'designs';
+
+  // thumbnail
+  let thumbHtml = '';
+  if (project.thumbnail) {
+    const thumbUrl = `${RAW}/assets/designs/${project.thumbnail}`;
+    thumbHtml = `<img src="${thumbUrl}" alt="${project.name}" loading="lazy"
+                      onerror="this.parentElement.querySelector('.web-card-thumb-fallback').style.display='flex';this.style.display='none'">
+                 <div class="web-card-thumb-fallback" style="display:none">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253"/></svg>
+                 </div>`;
+  } else {
+    thumbHtml = `<div class="web-card-thumb-fallback">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253"/></svg>
+                 </div>`;
+  }
+
+  card.innerHTML = `
+    ${thumbHtml}
+    <div class="web-card-info">
+      <div class="web-card-name">${project.name || 'Untitled'}</div>
+      ${project.description ? `<div class="web-card-desc">${project.description}</div>` : ''}
+      <span class="web-card-link">
+        Visit
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+      </span>
+    </div>`;
+  return card;
+}
+
+// ══ LOAD SECTIONS ══
+async function loadSection(name) {
+  if (loaded[name]) return;
+  loaded[name] = true;
+
+  if (name === 'designs') {
+    await loadDesigns();
+    return;
+  }
+
+  const { folder, types } = SECTIONS[name];
+  const container = document.getElementById(name + '-container');
+  try {
+    const res   = await fetch(`${API}/${folder}`);
+    if (!res.ok) throw new Error();
+    const files = await res.json();
+    const valid = files.filter(f => types.test(f.name));
+    if (!valid.length) {
+      container.innerHTML = '<div class="empty-state">Nothing here yet.</div>';
+      return;
+    }
+    container.innerHTML = '';
+    valid.forEach(file => {
+      const card = makeCard(file, name);
+      container.appendChild(card);
+      allFiles.push({
+        file,
+        name,
+        niceName: file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').toLowerCase()
+      });
+    });
+  } catch(e) {
+    container.innerHTML = '<div class="empty-state">Upload files to GitHub to see them here.</div>';
+  }
+}
+
+// ══ LOAD DESIGNS FROM projects.json ══
+async function loadDesigns() {
+  const container = document.getElementById('designs-container');
+  const jsonUrl   = `${RAW}/assets/designs/projects.json`;
+
+  try {
+    // add cache-busting so Netlify serves fresh JSON
+    const res = await fetch(jsonUrl + '?t=' + Date.now());
+    if (!res.ok) throw new Error('no json');
+    const projects = await res.json();
+
+    if (!projects.length) {
+      container.innerHTML = '<div class="empty-state">No projects yet.</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    projects.forEach(project => {
+      const card = makeWebCard(project);
+      container.appendChild(card);
+      allFiles.push({
+        file: { name: project.name, path: '' },
+        name: 'designs',
+        niceName: (project.name || '').toLowerCase(),
+        isWebProject: true,
+        project
+      });
+    });
+  } catch(e) {
+    container.innerHTML = '<div class="empty-state">Add projects.json to assets/designs/ to show websites here.</div>';
+  }
+}
+
+// ══ TABS ══
+let activeTab = 'photos';
+function switchTab(name, btn) {
+  activeTab = name;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  loadSection(name);
+  const q = document.getElementById('searchInput').value.trim();
+  if (q) doSearch(q);
+}
+
+// ══ SEARCH ══
+const searchInput       = document.getElementById('searchInput');
+const searchClear       = document.getElementById('searchClear');
+const searchResultsWrap = document.getElementById('search-results');
+const searchGrid        = document.getElementById('search-grid');
+const searchLabel       = document.getElementById('searchLabel');
+const noResults         = document.getElementById('noResults');
+const noResultsQuery    = document.getElementById('noResultsQuery');
+
+async function loadAllSections() {
+  for (const name of Object.keys(SECTIONS)) {
+    await loadSection(name);
+  }
+}
+
+function doSearch(q) {
+  const query = q.toLowerCase().trim();
+  if (!query) { clearSearch(); return; }
+  document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+  searchResultsWrap.style.display = 'block';
+  searchLabel.classList.add('visible');
+  searchLabel.textContent = `Search results for "${q}"`;
+  searchClear.classList.add('visible');
+
+  const matches = allFiles.filter(item => item.niceName.includes(query));
+  searchGrid.innerHTML = '';
+  noResults.classList.remove('visible');
+
+  if (!matches.length) {
+    noResultsQuery.textContent = q;
+    noResults.classList.add('visible');
+    return;
+  }
+  matches.forEach(item => {
+    const card = item.isWebProject
+      ? makeWebCard(item.project)
+      : makeCard(item.file, item.name);
+    searchGrid.appendChild(card);
+  });
+}
+
+function clearSearch() {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  searchResultsWrap.style.display = 'none';
+  searchLabel.classList.remove('visible');
+  document.querySelectorAll('.tab-panel').forEach(p => p.style.display = '');
+  document.getElementById('tab-' + activeTab).classList.add('active');
+}
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim();
+  if (q) { doSearch(q); searchClear.classList.add('visible'); }
+  else   { clearSearch(); }
+});
+searchClear.addEventListener('click', clearSearch);
+
+// ══ LIGHTBOX ══
+function openLb(type, url) {
+  document.getElementById('lb-content').innerHTML = type === 'video'
+    ? `<video src="${url}" controls autoplay style="max-width:92vw;max-height:80vh;border-radius:8px"></video>`
+    : `<img src="${url}" style="max-width:92vw;max-height:80vh;object-fit:contain;border-radius:8px">`;
+  document.getElementById('lb').classList.add('open');
+}
+function closeLb() {
+  document.getElementById('lb').classList.remove('open');
+  document.getElementById('lb-content').innerHTML = '';
+}
+document.getElementById('lb').addEventListener('click', function(e) {
+  if (e.target === this) closeLb();
+});
+
+// ══ INIT ══
+loadProfileImage();
+loadSection('photos');
+loadAllSections();
+</script>
+</body>
+</html>
